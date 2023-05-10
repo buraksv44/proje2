@@ -1,27 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class ZombieMovement : MonoBehaviour
 {
-    GameObject wagon;
-    Transform zombieTransform;
+    NavMeshAgent agent;
+    GameObject hedef;
 
     void Start()
     {
-        wagon = GameObject.Find("Wagon");
-        Debug.Log(wagon.transform.position);
+      agent = GetComponent<NavMeshAgent>();
+        hedef = GameObject.Find("Wagon");
     }
 
     void Update()
     {
-        ZombieRotation();
+        agent.SetDestination(hedef.transform.position);
 
     }
 
 
-    void ZombieRotation() 
-    {
-        transform.LookAt(wagon.transform);
-    }
+   
 }
