@@ -30,36 +30,36 @@ public class EnemySpawn : MonoBehaviour
 
         //Sag bolge spawn posizyonlari
 
-        GameObject R1 = GameObject.Find("right1"),
-                   R2 = GameObject.Find("right2"),
-                   R3 = GameObject.Find("right3");
+        Vector3 R1 = new Vector3(30, enemy.transform.position.y, 90),
+                R2 = new Vector3(37, enemy.transform.position.y, 83),
+                R3 = new Vector3(33, enemy.transform.position.y, 89);
 
         int r = Random.Range(1, 4);
 
         switch (r)
         {
             case 1:
-                R1.transform.position = new Vector3(Random.Range(R1.transform.position.x, R1.transform.position.x - 2), enemy.transform.position.y, Random.Range(R1.transform.position.z - 3, R1.transform.position.z + 3) );
-                right = R1.transform.position;
+                R1 = new Vector3(Random.Range(R1.x, R1.x - 2), enemy.transform.position.y, Random.Range(R1.z - 3, R1.z + 3));
+                right = R1;
                 break;
 
             case 2:
-                R2.transform.position = new Vector3(Random.Range(R2.transform.position.x, R2.transform.position.x - 2), enemy.transform.position.y, Random.Range(R2.transform.position.z - 3, R2.transform.position.z + 3));
-                right = R2.transform.position;
+                R2 = new Vector3(Random.Range(R2.x, R2.x - 2), enemy.transform.position.y, Random.Range(R2.z - 3, R2.z + 3));
+                right = R2;
                 break;
 
             case 3:
-                R3.transform.position = new Vector3(Random.Range(R3.transform.position.x, R3.transform.position.x - 2), enemy.transform.position.y, Random.Range(R3.transform.position.z - 3, R3.transform.position.z + 3));
-                right = R3.transform.position;
+                R3 = new Vector3(Random.Range(R3.x, R3.x - 2), enemy.transform.position.y, Random.Range(R3.z - 3, R3.z + 3));
+                right = R3;
                 break;
         }
 
 
         //Sol bolge spawn posizyonlari
 
-        GameObject L1 = GameObject.Find("left1"),
-                   L2 = GameObject.Find("left2"),
-                   L3 = GameObject.Find("left3");
+        Vector3 L1 = new Vector3(120, enemy.transform.position.y, 95),
+                L2 = new Vector3(123, enemy.transform.position.y, 82),
+                L3 = new Vector3(115, enemy.transform.position.y, 85);
 
         int l = Random.Range(1, 4);
 
@@ -68,45 +68,45 @@ public class EnemySpawn : MonoBehaviour
 
 
             case 1:
-                L1.transform.position = new Vector3(Random.Range(L1.transform.position.x, L1.transform.position.x + 2), enemy.transform.position.y, Random.Range(L1.transform.position.z - 3, L1.transform.position.z + 3));
-                left = L1.transform.position;
+                L1 = new Vector3(Random.Range(L1.x, L1.x + 2), enemy.transform.position.y, Random.Range(L1.z - 3, L1.z + 3));
+                left = L1;
                 break;
 
             case 2:
-                L2.transform.position = new Vector3(Random.Range(L2.transform.position.x, L2.transform.position.x + 2), enemy.transform.position.y, Random.Range(L2.transform.position.z - 3, L2.transform.position.z + 3));
-                left = L2.transform.position;
+                L2 = new Vector3(Random.Range(L2.x, L2.x + 2), enemy.transform.position.y, Random.Range(L2.z - 3, L2.z + 3));
+                left = L2;
                 break;
 
             case 3:
-                L3.transform.position = new Vector3(Random.Range(L3.transform.position.x, L3.transform.position.x + 2), enemy.transform.position.y, Random.Range(L3.transform.position.z - 3, L3.transform.position.z + 3));
-                left = L3.transform.position;
+                L3 = new Vector3(Random.Range(L3.x, L3.x + 2), enemy.transform.position.y, Random.Range(L3.z - 3, L3.z + 3));
+                left = L3;
                 break;
         }
 
 
         // Arka bolge spawn posizyonlarý
 
-        GameObject B1 = GameObject.Find("back1"),
-                   B2 = GameObject.Find("back2"),
-                   B3 = GameObject.Find("back3");
+        Vector3 B1 = new Vector3(65, enemy.transform.position.y, 30),
+                B2 = new Vector3(80, enemy.transform.position.y, 25),
+                B3 = new Vector3(76, enemy.transform.position.y, 32);
 
         int b = Random.Range(1, 4);
 
         switch (b)
         {
             case 1:
-                B1.transform.position = new Vector3(Random.Range(B1.transform.position.x-3, B1.transform.position.x +3), enemy.transform.position.y, Random.Range(B1.transform.position.z, B1.transform.position.z -2));
-                back = B1.transform.position;
+                B1 = new Vector3(Random.Range(B1.x-3, B1.x +3), enemy.transform.position.y, Random.Range(B1.z, B1.z -2));
+                back = B1;
                 break;
 
             case 2:
-                B2.transform.position = new Vector3(Random.Range(B2.transform.position.x-3, B2.transform.position.x + 3), enemy.transform.position.y, Random.Range(B2.transform.position.z, B2.transform.position.z -2));
-                back = B2.transform.position;
+                B2 = new Vector3(Random.Range(B2.x-3, B2.x + 3), enemy.transform.position.y, Random.Range(B2.z, B2.z -2));
+                back = B2;
                 break;
 
             case 3:
-                B3.transform.position = new Vector3(Random.Range(B3.transform.position.x-3, B3.transform.position.x + 3), enemy.transform.position.y, Random.Range(B3.transform.position.z, B3.transform.position.z -2));
-                back = B3.transform.position;
+                B3 = new Vector3(Random.Range(B3.x-3, B3.x + 3), enemy.transform.position.y, Random.Range(B3.z, B3.z -2));
+                back = B3;
                 break;
         }
 
