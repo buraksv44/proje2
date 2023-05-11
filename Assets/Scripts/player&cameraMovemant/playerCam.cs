@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class PlayerCam : MonoBehaviour
+public class playerCam : MonoBehaviour
 {
     public float sensX;
     public float sensY;
@@ -16,20 +15,22 @@ public class PlayerCam : MonoBehaviour
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible= false;
+        Cursor.visible = false;
     }
+
     private void Update()
     {
-        // fare giriþlerini alma
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
         yRotation += mouseX;
         xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);// aþaðý yukarý bakýþý 90 derecede sabitleme
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        //kamerayý çevirme
-        transform.rotation = Quaternion.Euler(xRotation,yRotation,0);
-        orientation.rotation= Quaternion.Euler(0,yRotation,0);
+        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        orientation.rotation = Quaternion.Euler(0, yRotation, 0);
+
     }
 }
+
+

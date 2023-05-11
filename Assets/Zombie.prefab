@@ -1420,6 +1420,7 @@ GameObject:
   - component: {fileID: 6676941817556392309}
   - component: {fileID: 796868538008702405}
   - component: {fileID: 8464570427602405398}
+  - component: {fileID: -3181784419194774394}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Untagged
@@ -1459,7 +1460,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &8464570427602405398
 CapsuleCollider:
@@ -1472,9 +1473,21 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.25821304
-  m_Height: 2.258762
+  m_Height: 2.2002087
   m_Direction: 1
-  m_Center: {x: 0, y: 1.0675325, z: 0.0034370422}
+  m_Center: {x: 0, y: 1.0968091, z: 0.0034370422}
+--- !u!114 &-3181784419194774394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332786314057221071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d29a45fc9370ec34c9206567f7ff4191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6430252085211725016
 GameObject:
   m_ObjectHideFlags: 0
