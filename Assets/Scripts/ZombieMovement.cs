@@ -19,6 +19,4 @@ public class ZombieMovement : MonoBehaviour
         agent.SetDestination(hedef.transform.position);
 
     }
-
-
 }
