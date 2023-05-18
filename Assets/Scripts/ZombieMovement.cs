@@ -2,21 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEngine.GraphicsBuffer;
 
 public class ZombieMovement : MonoBehaviour
 {
-     NavMeshAgent agent;
-     GameObject hedef;
-  
+    NavMeshAgent agent;
+    EnemySpawn enemySpawn ;
+    GameObject hedef;
+
     void Start()
     {
+        enemySpawn = FindObjectOfType<EnemySpawn>();
         agent = GetComponent<NavMeshAgent>();
-        hedef = GameObject.Find("Wagon");
+        hedef = enemySpawn.target;
+
     }
 
     void Update()
     {
-        agent.SetDestination(hedef.transform.position);
+        if (enemySpawn.target == null)
+        {
+            hedef = enemySpawn.target;
 
+        }
+        agent.SetDestination(hedef.transform.position);
+       
     }
+
+   
+
 }

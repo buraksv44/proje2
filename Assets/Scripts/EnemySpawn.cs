@@ -6,22 +6,31 @@ using Random = UnityEngine.Random;
 
 public class EnemySpawn : MonoBehaviour
 {
-    int location;
+    internal int location;
     int sayac = 0;
-    Vector3 left, right, back;
+    internal Vector3 left, right, back;
     public GameObject enemy;
     public int spawnZamani;
     public int spawnAdeti;
+    internal GameObject target;
+    float x, y, z;
 
-    private void Start()
+
+
+    private void Awake()
     {
         Spawner();
 
     }
 
+
     void Spawner() //belirli zaman araliginda obje spawn etme
     {
-        InvokeRepeating("EnemyInstant", spawnZamani, spawnZamani);
+        // InvokeRepeating("EnemyInstant", spawnZamani, spawnZamani);
+
+
+        StartCoroutine(kk());
+
     }
 
 
@@ -115,7 +124,7 @@ public class EnemySpawn : MonoBehaviour
 
 
 
-    void EnemyInstant()
+    internal void EnemyInstant()
     {
         //Olusacak objeye rastgele bir bolge belirlenmesi
         sayac++;
@@ -125,12 +134,15 @@ public class EnemySpawn : MonoBehaviour
         {
             case 1:
                 Instantiate(enemy, left, Quaternion.identity); //sol bolge spawn
+                TargetLeft();
                 break;
             case 2:
                 Instantiate(enemy, right, Quaternion.identity); //sag bolge spawn
+                TargetRight();
                 break;
             case 3:
                 Instantiate(enemy, back, Quaternion.identity); // arka bolge spawn
+                TargetBack();
                 break;
         }
 
@@ -138,14 +150,88 @@ public class EnemySpawn : MonoBehaviour
         {
             CancelInvoke();
         }
-
-
     }
 
 
 
+    void TargetLeft()
+    {
+
+
+        x = transform.position.z - GameObject.Find("lt1").transform.position.z;
+        y = transform.position.z - GameObject.Find("lt2").transform.position.z;
+        z = transform.position.z - GameObject.Find("lt3").transform.position.z;
 
 
 
+        if (x < y & x < z)
+        {
+            target = GameObject.Find("lt1");
+            Debug.Log("first");
+        }
+
+        else if (y < x & y < z)
+        {
+            target = GameObject.Find("lt2");
+            Debug.Log("seconds");
+        }
+        else if (z < x & z < y)
+        {
+            target = GameObject.Find("lt3");
+            Debug.Log("third");
+        }
+
+
+    }
+
+    void TargetRight()
+    {
+
+
+        x = transform.position.z - GameObject.Find("rt1").transform.position.z;
+        y = transform.position.z - GameObject.Find("rt2").transform.position.z;
+        z = transform.position.z - GameObject.Find("rt3").transform.position.z;
+
+
+
+        if (x < y & x < z)
+            target = GameObject.Find("rt1");
+        else if (y < x & y < z)
+            target = GameObject.Find("rt2");
+        else if (z < x & z < y)
+            target = GameObject.Find("rt3");
+
+    }
+
+    void TargetBack()
+    {
+
+
+        x = transform.position.x - GameObject.Find("blt").transform.position.x;
+        y = transform.position.x - GameObject.Find("brt").transform.position.x;
+
+
+
+        if (x < y)
+            target = GameObject.Find("blt");
+        else if (y < x)
+            target = GameObject.Find("brt");
+
+    }
+
+    IEnumerator kk()
+    {
+
+
+
+        while (true)
+        {
+
+            EnemyInstant();
+
+            yield return new WaitForSeconds(2f);
+        }
+
+    }
 
 }
