@@ -26,9 +26,7 @@ public class EnemySpawn : MonoBehaviour
 
     void Spawner() //belirli zaman araliginda obje spawn etme
     {
-        // InvokeRepeating("EnemyInstant", spawnZamani, spawnZamani);
-
-
+    
         StartCoroutine(kk());
 
     }
@@ -146,10 +144,7 @@ public class EnemySpawn : MonoBehaviour
                 break;
         }
 
-        if (sayac == spawnAdeti) // Spawn olan obje istenilen sayiya ulasinca durmasi
-        {
-            CancelInvoke();
-        }
+       
     }
 
 
@@ -221,10 +216,10 @@ public class EnemySpawn : MonoBehaviour
 
     IEnumerator kk()
     {
+        
 
 
-
-        while (true)
+        while (sayac < spawnAdeti)
         {
 
             EnemyInstant();

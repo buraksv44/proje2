@@ -2100,7 +2100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 6332786314057221071, guid: 0d42e02da3c76a742aff51f2d7fc6533, type: 3}
   spawnZamani: 2
-  spawnAdeti: 20
+  spawnAdeti: 6
 --- !u!1 &1270115022
 GameObject:
   m_ObjectHideFlags: 0
