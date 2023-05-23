@@ -13,7 +13,6 @@ public class EnemySpawn : MonoBehaviour
     public int spawnZamani;
     public int spawnAdeti;
     internal GameObject target;
-    float x, y, z;
     GameObjects array;
 
 

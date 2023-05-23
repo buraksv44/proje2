@@ -1,8 +1,7 @@
-using System;
-using System.Collections;
+
 using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
+
 
 public class Turret : MonoBehaviour
 {
@@ -10,81 +9,68 @@ public class Turret : MonoBehaviour
     public int turretType;
     public float maxRange = 22f;
     public float minRange = 6f;
-    Array zombies;
     GameObjects gameObjects;
-    public GameObject closestZombie = null;
+    GameObject closestZombie = null;
 
     private void Awake()
     {
         gameObjects = GameObject.FindObjectOfType<GameObjects>();
     }
-
-    // Start is called before the first frame update
     void Start()
     {
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
     }
 
-    void UpdateTarget() 
+    void UpdateTarget()
     {
-        GameObject[] zombies;
-
-        
+        List<GameObject> zombies;
 
         if (turretType == 0)
         {
-        zombies = gameObjects.leftSpawn.ToArray();
-
+            zombies = gameObjects.leftSpawn;
         }
-        else if (turretType == 1) 
+        else if (turretType == 1)
         {
-        zombies = gameObjects.backSpawn.ToArray();
+            zombies = gameObjects.backSpawn;
         }
-            
-        else 
+        else
         {
-         zombies = gameObjects.rightSpawn.ToArray();
-
+            zombies = gameObjects.rightSpawn;
         }
-        
-        Debug.Log("turretType:"+ turretType +"  "+ zombies.Length);
+
+        //Debug.Log("turretType:"+ turretType +"  "+ zombies.Count);
         float shortestDistance = Mathf.Infinity;
-        
-        //GameObject closestZombie = null;
-        
-        if (closestZombie == null) 
+        closestZombie = null;
+
+        if (closestZombie == null)
         {
             foreach (GameObject zombie in zombies)
             {
                 float distanceToZombie = Vector3.Distance(transform.position, zombie.transform.position);
-                if (distanceToZombie < shortestDistance)
+
+                if (distanceToZombie < shortestDistance && distanceToZombie > minRange)
                 {
                     shortestDistance = distanceToZombie;
                     closestZombie = zombie;
-                    
                 }
-        }
+            }
         }
 
         if (closestZombie != null && shortestDistance <= maxRange && shortestDistance >= minRange)
         {
             target = closestZombie.transform;
-            
+            Debug.Log("targethere");
         }
-        else 
+        else
         {
-            target=null;
+            target = null;
         }
-    
     }
 
-    // Update is called once per frame
+
     void Update()
     {
-        //if (target != null) 
-        //{
-        //    return;
-        //}
+
     }
 
 
