@@ -7,18 +7,25 @@ public class Turret : MonoBehaviour
 {
     public Transform target;
     public int turretType;
-    public float maxRange = 22f;
-    public float minRange = 6f;
+    public float maxRange = 25f;
+    public float minRange = 10f;
     GameObjects gameObjects;
     GameObject closestZombie = null;
+    public Transform gun;
+    public Transform barrel;
+    public float turnSpeed = 5f;
+    Quaternion defaultTurretPos;
 
     private void Awake()
     {
         gameObjects = GameObject.FindObjectOfType<GameObjects>();
+
     }
     void Start()
     {
+        defaultTurretPos = gun.rotation;
         InvokeRepeating("UpdateTarget", 0f, 0.5f);
+
     }
 
     void UpdateTarget()
@@ -59,7 +66,7 @@ public class Turret : MonoBehaviour
         if (closestZombie != null && shortestDistance <= maxRange && shortestDistance >= minRange)
         {
             target = closestZombie.transform;
-            Debug.Log("targethere");
+            Debug.Log("pewpew");
         }
         else
         {
@@ -70,17 +77,35 @@ public class Turret : MonoBehaviour
 
     void Update()
     {
-
+        GunRotation();
     }
 
 
+    void GunRotation()
+    {
+        if (target == null)
+        {
+            gun.rotation = Quaternion.Lerp(gun.rotation, defaultTurretPos, Time.deltaTime * turnSpeed);
+
+        }
+        else
+        {
+
+            Vector3 direction = target.position - transform.position;
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            gun.rotation = Quaternion.Lerp(gun.rotation, lookRotation, Time.deltaTime * turnSpeed);
+
+        }
+
+    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position, maxRange);
+        Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, maxRange);
+
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, minRange);
+        Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, minRange);
 
     }
 }
