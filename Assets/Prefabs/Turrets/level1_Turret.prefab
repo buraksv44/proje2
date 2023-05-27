@@ -130,8 +130,11 @@ MonoBehaviour:
   turretType: 0
   maxRange: 25
   minRange: 10
+  turnSpeed: 5
   gun: {fileID: 8513823986649617895}
   barrel: {fileID: 454867204275270629}
+  bulletPrefab: {fileID: 6731309625833007719, guid: 868e32640b33b0942bdc310996b60b72, type: 3}
+  firePoint: {fileID: 6684981895485656919}
 --- !u!1 &458728566364663777
 GameObject:
   m_ObjectHideFlags: 0
@@ -569,6 +572,37 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 454867200442483447}
+  - {fileID: 6684981895485656919}
   m_Father: {fileID: 454867198425871853}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!1 &6023501933773466130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6684981895485656919}
+  m_Layer: 0
+  m_Name: firePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6684981895485656919
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6023501933773466130}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 5.47}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8513823986649617895}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

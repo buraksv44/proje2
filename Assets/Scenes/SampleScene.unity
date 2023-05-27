@@ -1679,6 +1679,26 @@ PrefabInstance:
       propertyPath: turnSpeed
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 8513823986649617895, guid: 37bb65c9bb8d34440a3df7e15ce18b65, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7112816
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513823986649617895, guid: 37bb65c9bb8d34440a3df7e15ce18b65, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.000000015545552
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513823986649617895, guid: 37bb65c9bb8d34440a3df7e15ce18b65, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.70290726
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513823986649617895, guid: 37bb65c9bb8d34440a3df7e15ce18b65, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.000000015362525
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513823986649617895, guid: 37bb65c9bb8d34440a3df7e15ce18b65, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 89.321
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 37bb65c9bb8d34440a3df7e15ce18b65, type: 3}
 --- !u!1 &851729278
@@ -2185,6 +2205,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Base
       objectReference: {fileID: 0}
+    - target: {fileID: 766520183381881709, guid: 776f852d599adae47936ad3f88b8813f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 766520183381881713, guid: 776f852d599adae47936ad3f88b8813f, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -2450,7 +2474,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 6332786314057221071, guid: 0d42e02da3c76a742aff51f2d7fc6533, type: 3}
   spawnZamani: 2
-  spawnAdeti: 9
+  spawnAdeti: 20
 --- !u!114 &1248751471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4108,7 +4132,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1918905303
 Transform:
   m_ObjectHideFlags: 0

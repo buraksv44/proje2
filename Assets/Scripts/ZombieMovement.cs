@@ -1,15 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
+
 
 public class ZombieMovement : MonoBehaviour
 {
     NavMeshAgent agent;
     EnemySpawn enemySpawn ;
     GameObject hedef;
+    
 
+    public void takeDamage() 
+    {
+      Destroy(gameObject);
+    }    
     void Start()
     {
         enemySpawn = FindObjectOfType<EnemySpawn>();
