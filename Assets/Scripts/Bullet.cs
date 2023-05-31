@@ -18,8 +18,12 @@ public class Bullet : MonoBehaviour
     
     void Start()
     {
-        Vector3 dir = target.position - transform.position;
-        rb.velocity = dir.normalized * bulletSpeed;
+        if (target!= null) 
+        {
+            Vector3 dir = target.position - transform.position;
+            rb.velocity = dir.normalized * bulletSpeed;
+        }
+        
     }
 
     
@@ -34,17 +38,18 @@ public class Bullet : MonoBehaviour
         
         
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.tag == "zombie")
-        {
-            rb.velocity = Vector3.zero;
-
-            Destroy(collision.gameObject);
-            Destroy(gameObject);
-        }
-        else
-            Destroy(gameObject, 2f);
+    //private void OnCollisionEnter(Collision collision)
+    //{
+    //    if (collision.gameObject.tag == "zombie")
+    //    {
+    //        rb.velocity = Vector3.zero;
+    //        //collision.gameObject.GetComponent<Animator>().SetBool("isDead", true);
+    //        //collision.gameObject.GetComponent<Animator>().SetInteger("deathType", Random.Range(0, 2));
+    //        Destroy(collision.gameObject);
+    //        Destroy(gameObject);
+    //    }
+    //    else
+    //        Destroy(gameObject, 2f);
 
     }
-}
+

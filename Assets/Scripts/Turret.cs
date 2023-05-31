@@ -75,7 +75,7 @@ public class Turret : MonoBehaviour
         {
             target = closestZombie.transform;
             Shoot();
-            Debug.Log("pewpew");
+            //Debug.Log("pewpew");
         }
         else
         {
@@ -104,7 +104,7 @@ public class Turret : MonoBehaviour
             Vector3 direction = target.position - transform.position;
             Quaternion lookRotation = Quaternion.LookRotation(direction);
             gun.rotation = Quaternion.Lerp(gun.rotation, lookRotation, Time.deltaTime * turnSpeed);
-
+            
         }
 
     }
