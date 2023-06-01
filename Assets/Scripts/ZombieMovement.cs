@@ -33,10 +33,18 @@ public class ZombieMovement : MonoBehaviour
         if (enemySpawn.target == null)
         {
             hedef = enemySpawn.target;
-
+        }
+        if (health <= 0)
+        {
+            agent.velocity = Vector3.zero;
+            agent.speed = 0f;
+        }
+        else 
+        {
+            agent.SetDestination(hedef.transform.position);
         }
 
-        agent.SetDestination(hedef.transform.position);
+        
         checkDistance();
 
     }
@@ -52,13 +60,9 @@ public class ZombieMovement : MonoBehaviour
             Destroy(other.gameObject);
             if (health <= 0)
             {
-
-                agent.velocity = Vector3.zero;
-                agent.speed = 0f;
                 animator.SetInteger("deathType", Random.Range(0, 2));
                 animator.SetBool("isDead", true);
-
-                
+                               
                 Destroy(gameObject, 3f);
             }
         }
