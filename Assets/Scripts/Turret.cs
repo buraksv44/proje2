@@ -118,18 +118,14 @@ public class Turret : MonoBehaviour
             bullet.BulletTarget(target);
     }
 
-    public void RemoveZombie(GameObject zombieToRemove, List<GameObject> zombies) 
-    {
-        zombies.Remove(zombieToRemove);
-    } 
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, maxRange);
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, maxRange);
 
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, minRange);
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, minRange);
 
         Gizmos.color = Color.green;
         Gizmos.DrawLine(gun.position,gun.position+gun.forward*maxRange);

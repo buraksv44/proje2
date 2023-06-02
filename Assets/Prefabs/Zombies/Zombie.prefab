@@ -1491,6 +1491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 0}
+  health: 50
 --- !u!195 &896331265349022978
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1501,7 +1502,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 0.8
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360

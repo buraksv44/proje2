@@ -30,26 +30,16 @@ public class Bullet : MonoBehaviour
     
     void Update()
     {
-        if (target == null) 
+        if (target == null)
         {
             Destroy(gameObject);
-            return;
         }
+        else
+            Destroy(gameObject, 3f);
         
         
     }
-    //private void OnCollisionEnter(Collision collision)
-    //{
-    //    if (collision.gameObject.tag == "zombie")
-    //    {
-    //        rb.velocity = Vector3.zero;
-    //        //collision.gameObject.GetComponent<Animator>().SetBool("isDead", true);
-    //        //collision.gameObject.GetComponent<Animator>().SetInteger("deathType", Random.Range(0, 2));
-    //        Destroy(collision.gameObject);
-    //        Destroy(gameObject);
-    //    }
-    //    else
-    //        Destroy(gameObject, 2f);
+    
 
     }
 
