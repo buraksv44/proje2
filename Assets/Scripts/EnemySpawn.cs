@@ -12,6 +12,7 @@ public class EnemySpawn : MonoBehaviour
     public int spawnAdeti;
     internal GameObject target;
     GameObjects array;
+    internal int trainHealth = 100;
 
 
     private void Awake()

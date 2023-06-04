@@ -1,5 +1,8 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 
 public class ZombieMovement : MonoBehaviour
@@ -13,6 +16,7 @@ public class ZombieMovement : MonoBehaviour
     float distance;
     public float health = 50f;
     float bulletDamage;
+    int zombieDamage = 5;
 
     GameObjects gameObjects;
     bool left, right, back;
@@ -47,6 +51,9 @@ public class ZombieMovement : MonoBehaviour
         {
            destination = hedef.transform.position;
         }
+
+
+    
 
     }
 
@@ -112,13 +119,22 @@ public class ZombieMovement : MonoBehaviour
             agent.speed = 1f;
             animator.SetInteger("attackType", Random.Range(0, 4));
             animator.SetTrigger("attack");
+           
         }
+       
+          
+        
+
+
+
     }
 
     public void AnimationEventZombieHit() // Animation tarafýndan çaðrýlýr 
     {
         Debug.Log("HIT!");
-        //trene hasar ver... "Wagon"
+        enemySpawn.trainHealth -= zombieDamage;
+        Debug.Log(enemySpawn.trainHealth);
+
     }
 
 
@@ -127,6 +143,10 @@ public class ZombieMovement : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawSphere(destination, 0.1f);
     }
+
+
+
+   
 }
 
 

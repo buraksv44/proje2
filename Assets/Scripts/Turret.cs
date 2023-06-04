@@ -75,7 +75,7 @@ public class Turret : MonoBehaviour
         {
             target = closestZombie.transform;
             Shoot();
-            //Debug.Log("pewpew");
+           
         }
         else
         {
