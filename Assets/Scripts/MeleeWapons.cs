@@ -16,17 +16,17 @@ public class MeleeWapons : MonoBehaviour
     }
 
 
-    void RightButton()
+   public void RightButton()
     {
         rightAnim.SetTrigger("RightMelee");
 
     }
-    void LeftButton()
+   public void LeftButton()
     {
         leftAnim.SetTrigger("LeftMelee");
 
     }
-    void BackButton()
+   public void BackButton()
     {
 
         backAnim.SetTrigger("BackMelee");
