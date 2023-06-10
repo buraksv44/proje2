@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = UnityEngine.Random;
@@ -21,9 +19,14 @@ public class ZombieMovement : MonoBehaviour
     GameObjects gameObjects;
     bool left, right, back;
     Vector3 destination = Vector3.zero;
+    public bool atMelee = false;
+    public GameObject vfxHit;
+    HealthBar healthBar;
+    
 
     private void Awake()
     {
+        healthBar = FindObjectOfType<HealthBar>();
         gameObjects = FindObjectOfType<GameObjects>();
         animator = GetComponent<Animator>();
         enemySpawn = FindObjectOfType<EnemySpawn>();
@@ -71,32 +74,26 @@ public class ZombieMovement : MonoBehaviour
         }
 
         checkDistance();
+        ZombieDeath();
+        AddZombieToMelee();
+
+
     }
 
+    
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("bullet"))
         {
+            GameObject _vfxHit = Instantiate(vfxHit, other.transform.position-other.transform.forward*1.5f, other.transform.rotation*Random.rotation);
+            Destroy(_vfxHit,1f);
             Bullet _bullet = other.gameObject.GetComponent<Bullet>();
             bulletDamage = _bullet.damage;
             health -= bulletDamage;
 
             Destroy(other.gameObject);
 
-            if (health <= 0)
-            {
-                animator.SetInteger("deathType", Random.Range(0, 2));
-                animator.SetBool("isDead", true);
-
-                if (left)
-                    gameObjects.leftSpawn.Remove(gameObject);
-                if (right)
-                    gameObjects.rightSpawn.Remove(gameObject);
-                if (back)
-                    gameObjects.backSpawn.Remove(gameObject);
-
-                Destroy(gameObject, 3f);
-            }
+            
         }
 
     }
@@ -119,34 +116,58 @@ public class ZombieMovement : MonoBehaviour
             agent.speed = 1f;
             animator.SetInteger("attackType", Random.Range(0, 4));
             animator.SetTrigger("attack");
-           
+            atMelee = true;
         }
-       
-          
-        
-
-
-
     }
 
     public void AnimationEventZombieHit() // Animation tarafýndan çaðrýlýr 
     {
-        Debug.Log("HIT!");
-        enemySpawn.trainHealth -= zombieDamage;
-        Debug.Log(enemySpawn.trainHealth);
-
+        healthBar.Damage(zombieDamage);
     }
-
-
-    private void OnDrawGizmosSelected()
+    void ZombieDeath() 
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawSphere(destination, 0.1f);
+        if (health <= 0)
+        {
+            animator.SetInteger("deathType", Random.Range(0, 2));
+            animator.SetBool("isDead", true);
+
+            if (left)
+            {
+                gameObjects.leftSpawn.Remove(gameObject);
+                if (atMelee)
+                    gameObjects.leftMelee.Remove(gameObject);
+            }
+            if (right)
+            {
+                gameObjects.rightSpawn.Remove(gameObject);
+                if (atMelee)
+                    gameObjects.rightMelee.Remove(gameObject);
+            }
+
+            if (back)
+            {
+                gameObjects.backSpawn.Remove(gameObject);
+                if (atMelee)
+                    gameObjects.backMelee.Remove(gameObject);
+            }
+
+            Destroy(gameObject, 3f);
+        }
     }
+    internal void AddZombieToMelee()
+    {
+        if (atMelee && health >0)
+        {
+            if (left && !gameObjects.leftMelee.Contains(this.gameObject))
+                gameObjects.leftMelee.Add(gameObject);
 
+            if (right && !gameObjects.rightMelee.Contains(this.gameObject))
+                gameObjects.rightMelee.Add(gameObject);
 
-
-   
+            if (back && !gameObjects.backMelee.Contains(this.gameObject))
+                gameObjects.backMelee.Add(gameObject);
+        }
+    }
 }
 
 

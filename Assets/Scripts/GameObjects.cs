@@ -8,6 +8,9 @@ public class GameObjects : MonoBehaviour
    public List<GameObject> rightSpawn ;
    public List<GameObject> leftSpawn ;
    public List<GameObject> backSpawn ;
+   public List<GameObject> rightMelee;
+   public List<GameObject> leftMelee;
+   public List<GameObject> backMelee;
 
 
     void Start()

@@ -133,8 +133,10 @@ MonoBehaviour:
   turnSpeed: 5
   gun: {fileID: 8513823986649617895}
   barrel: {fileID: 454867204275270629}
-  bulletPrefab: {fileID: 6731309625833007719, guid: 868e32640b33b0942bdc310996b60b72, type: 3}
+  bulletPrefab: {fileID: 1537447430322193180, guid: 2d373254ae2d4494d9edf6ae6fead60d, type: 3}
   firePoint: {fileID: 6684981895485656919}
+  muzzlePrefab: {fileID: 4633470174917803404, guid: 38bf59e3c34ca8c4e9b9e5ac2d77b096, type: 3}
+  fireRate: 3
 --- !u!1 &458728566364663777
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,6 +148,7 @@ GameObject:
   - component: {fileID: 454867204275270629}
   - component: {fileID: 444462063222054207}
   - component: {fileID: 436709324092261425}
+  - component: {fileID: 3968408969728544696}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -216,6 +219,25 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &3968408969728544696
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 458728566364663777}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 39940026c75bfad439874fc1db333472, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &458728566452014375
 GameObject:
   m_ObjectHideFlags: 0

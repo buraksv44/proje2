@@ -3,8 +3,8 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
     Transform target;
-    public float bulletSpeed =25f;
-    public float damage = 10f;
+    public float bulletSpeed =90f;
+    public float damage = 5f;
     Rigidbody rb;
     public void BulletTarget(Transform _target) 
     {
@@ -20,14 +20,15 @@ public class Bullet : MonoBehaviour
     {
         if (target!= null) 
         {
-            Vector3 dir = target.position - transform.position;
+            Vector3 dir = target.position+ new Vector3 (Random.Range(-0.5f,0.5f),Random.Range(0f,1.5f),0) - transform.position;
             rb.velocity = dir.normalized * bulletSpeed;
         }
         
     }
 
+
     
-    
+
     void Update()
     {
         if (target == null)

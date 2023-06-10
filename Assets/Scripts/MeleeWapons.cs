@@ -1,35 +1,69 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MeleeWapons : MonoBehaviour
 {
-    public Button rightButton, leftButton, backButton;
-
-    public Animator rightAnim, leftAnim, backAnim;
-
-
+    public Button Button;
+    public Animator Anim;
+    GameObjects gameObjects;
+    public int meleeType;
+    List<GameObject> zombies;
     void Start()
     {
-
+        
+        gameObjects = FindObjectOfType<GameObjects>();
     }
 
 
-   public void RightButton()
+    public void RightButton()
     {
-        rightAnim.SetTrigger("RightMelee");
-
+        Anim.SetTrigger("RightMelee");
+        MeleeWapon();
     }
-   public void LeftButton()
+    public void LeftButton()
     {
-        leftAnim.SetTrigger("LeftMelee");
-
+        Anim.SetTrigger("LeftMelee");
+        MeleeWapon();
     }
-   public void BackButton()
+    public void BackButton()
     {
-
-        backAnim.SetTrigger("BackMelee");
+        Anim.SetTrigger("BackMelee");
+        MeleeWapon();
     }
+
+    public void MeleeWapon()
+    {
+        if (meleeType == 1)
+        {
+            zombies = gameObjects.rightMelee;
+
+        }
+        else if (meleeType == 2)
+        {
+            zombies = gameObjects.leftMelee;
+
+        }
+        else if(meleeType == 3)
+        {
+            zombies = gameObjects.backMelee;
+        }
+
+
+        for (int i = 0; i < zombies.Count; i++)
+        {
+            if (zombies[i] != null)
+            {
+                zombies[i].gameObject.GetComponent<ZombieMovement>().health = 0;                
+            }
+        }
+        
+    }
+
+
+
+
+
+
 
 }

@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,14 +17,22 @@ public class Turret : MonoBehaviour
     public Transform barrel;
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public GameObject muzzlePrefab;
     
     Quaternion defaultTurretPos;
+    Quaternion lookRotation;
+    float rotationThreshold = 4f;
+    Animator barrelAnimator;
+    float timeToFire = 0f;
+    public float fireRate = 30f;
 
-    
+
+
 
     private void Awake()
     {
         gameObjects = GameObject.FindObjectOfType<GameObjects>();
+        barrelAnimator = gameObject.GetComponentInChildren<Animator>();
 
     }
     void Start()
@@ -62,11 +71,11 @@ public class Turret : MonoBehaviour
                 { 
                 float distanceToZombie = Vector3.Distance(transform.position, zombie.transform.position);
 
-                if (distanceToZombie < shortestDistance && distanceToZombie > minRange)
-                {
+                    if (distanceToZombie < shortestDistance && distanceToZombie > minRange)
+                    {
                     shortestDistance = distanceToZombie;
                     closestZombie = zombie;
-                }
+                    }
                 }
             }
         }
@@ -74,7 +83,7 @@ public class Turret : MonoBehaviour
         if (closestZombie != null && shortestDistance <= maxRange && shortestDistance >= minRange)
         {
             target = closestZombie.transform;
-            Shoot();
+            
            
         }
         else
@@ -88,34 +97,54 @@ public class Turret : MonoBehaviour
     {
         GunRotation();
         
+        
     }
 
 
+    IEnumerator waitForShoot() 
+    {
+        while(Quaternion.Angle(gun.rotation, lookRotation)> rotationThreshold)
+        {
+            yield return null;
+        }
+         Shoot();
+    }
+    
+    
     void GunRotation()
     {
         if (target == null)
         {
             gun.rotation = Quaternion.Lerp(gun.rotation, defaultTurretPos, Time.deltaTime * turnSpeed);
-
+            
         }
         else
         {
 
-            Vector3 direction = target.position - transform.position;
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            Vector3 direction = target.position+Vector3.up - transform.position;
+            lookRotation = Quaternion.LookRotation(direction);
             gun.rotation = Quaternion.Lerp(gun.rotation, lookRotation, Time.deltaTime * turnSpeed);
             
+            StartCoroutine(waitForShoot());
         }
 
     }
 
     void Shoot() 
     {
-        GameObject _bullet = (GameObject)Instantiate(bulletPrefab,firePoint.position, firePoint.rotation);
-        Bullet bullet = _bullet.GetComponent<Bullet>();
+        if (Time.time >= timeToFire)
+        {
+            timeToFire = Time.time + 1 / fireRate;
+            GameObject _bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+            Bullet bullet = _bullet.GetComponent<Bullet>();
+            GameObject _muzzlePrefab = Instantiate(muzzlePrefab, firePoint.position, firePoint.rotation);
+            Destroy(_muzzlePrefab, 1f);
+            
+            barrelAnimator.SetTrigger("fire");
 
-        if (bullet != null)
-            bullet.BulletTarget(target);
+            if (bullet != null)
+                bullet.BulletTarget(target);
+        }
     }
 
     private void OnDrawGizmosSelected()
