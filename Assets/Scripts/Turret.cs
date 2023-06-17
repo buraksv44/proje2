@@ -38,8 +38,10 @@ public class Turret : MonoBehaviour
     void Start()
     {
         defaultTurretPos = gun.rotation;
-        InvokeRepeating("UpdateTarget", 0f, 0.5f);
-
+        if (gameObjects != null)
+        {
+            InvokeRepeating("UpdateTarget", 0f, 0.5f);
+        }
     }
 
     void UpdateTarget()
