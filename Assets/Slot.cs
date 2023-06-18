@@ -4,27 +4,27 @@ using UnityEngine;
 public class Slot : MonoBehaviour
 {
     Animator animator;
-    public bool mouseIsOut=false;
-    
+    public bool mouseIsOut = false;
+
     public static GameObject selectedSlot;
+    public GameObject lvl1Tur, lvl2Tur, lvl3Tur, lvl4Tur;
+    GameObject _shop;
+    shop shp;
 
-    GameObject shop;
-    public static GameObject lvl1Tur, lvl2Tur, lvl3Tur, lvl4Tur;
-    
 
-    
+
 
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        shop = GameObject.FindWithTag("Shop");
-        
-        
+        _shop = GameObject.FindWithTag("Shop");
+        shp = FindObjectOfType<shop>();
+
 
     }
     private void Start()
     {
-        shop.SetActive(false);
+        _shop.SetActive(false);
     }
 
 
@@ -36,40 +36,61 @@ public class Slot : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("seçildi");
+
         animator.SetBool("isSelected", true);
         selectedSlot = GetSelectedSlot();
-        if(shop != null)
-            shop.SetActive(true);
-        
-        
-              
-        
+        if (_shop != null)
+            _shop.SetActive(true);
     }
     private void OnMouseExit()
     {
         mouseIsOut = true;
-        Debug.Log("mouseçýktý");
-        
+
     }
-    IEnumerator DeselectNode() 
+    IEnumerator DeselectNode()
     {
         if (mouseIsOut && Input.GetMouseButtonDown(0))
         {
             animator.SetBool("isSelected", false);
-            Debug.Log("saldý");
         }
-            return null;
+        return null;
     }
     private void Update()
     {
         InvokeRepeating("DeselectNode", 0, 0.5f);
-           
+        TurretSel();
+
     }
 
-    public GameObject GetSelectedSlot() 
+    public GameObject GetSelectedSlot()
     {
         return this.gameObject;
     }
 
+
+    void TurretSel()
+    {
+        switch (shp.type)
+        {
+            case 1:
+
+                lvl1Tur = selectedSlot.transform.GetChild(0).GetChild(0).gameObject;
+                break;
+
+            case 2:
+                lvl2Tur = selectedSlot.transform.GetChild(0).GetChild(1).gameObject;
+
+                break;
+
+            case 3:
+                lvl3Tur = selectedSlot.transform.GetChild(0).GetChild(2).gameObject;
+
+                break;
+
+            case 4:
+                lvl4Tur = selectedSlot.transform.GetChild(0).GetChild(3).gameObject;
+
+                break;
+        }
+    }
 }
