@@ -1105,7 +1105,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3676462766736857795
 Transform:
   m_ObjectHideFlags: 0
@@ -1464,7 +1464,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5149660963334941928
 Transform:
   m_ObjectHideFlags: 0
@@ -1855,12 +1855,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721e4b42276e9024389e92f08cef5150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseIsOut: 0
-  shop: {fileID: 0}
-  lvl1Tur: {fileID: 2650274280391609650}
-  lvl2Tur: {fileID: 3677421186591410643}
-  lvl3Tur: {fileID: 6829299466717453445}
-  lvl4Tur: {fileID: 5150707439580353464}
+  lvl1Tur:
+    turret: {fileID: 2650274280391609650}
+    type: 1
+    cost: 0
+  lvl2Tur:
+    turret: {fileID: 3677421186591410643}
+    type: 2
+    cost: 0
+  lvl3Tur:
+    turret: {fileID: 6829299466717453445}
+    type: 3
+    cost: 0
+  lvl4Tur:
+    turret: {fileID: 5150707439580353464}
+    type: 4
+    cost: 0
+  currentTurret:
+    turret: {fileID: 6829299466717453445}
+    type: 3
+    cost: 0
 --- !u!65 &4930607177765866723
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2315,7 +2329,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6830610241011456015
 Transform:
   m_ObjectHideFlags: 0
