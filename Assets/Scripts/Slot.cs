@@ -2,14 +2,15 @@ using UnityEngine;
 
 public class Slot : MonoBehaviour
 {
-    Animator animator;
+    Animator slotAnimator;
     public static Slot selectedSlot;
-    GameObject shopPanel;
+    public GameObject shopPanel;
     public TurretSpecs lvl1Tur, lvl2Tur, lvl3Tur, lvl4Tur;
     public TurretSpecs currentTurret;
+    
     private void Awake()
     {
-        animator = GetComponent<Animator>();
+        slotAnimator = GetComponent<Animator>();
         shopPanel = GameObject.FindWithTag("Shop");
     }
     private void Start()
@@ -19,7 +20,9 @@ public class Slot : MonoBehaviour
     private void OnMouseDown()
     {
         selectedSlot = GetSelectedSlot();
-        if (shopPanel != null) shopPanel.SetActive(true);
+
+        if(currentTurret.turret==null && shopPanel != null)
+            shopPanel.SetActive(true);
     }
     private void Update()
     {
@@ -61,12 +64,16 @@ public class Slot : MonoBehaviour
         {
             if (gameObject == selectedSlot.gameObject)
             {
-                animator.SetBool("isSelected", true);
+                slotAnimator.SetBool("isSelected", true);
             }
             else
             {
-                animator.SetBool("isSelected", false);
+                slotAnimator.SetBool("isSelected", false);
             }
+        }
+        else
+        {
+            slotAnimator.SetBool("isSelected", false);
         }
     }
 }

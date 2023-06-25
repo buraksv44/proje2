@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 public class ZombieMovement : MonoBehaviour
 {
     NavMeshAgent agent;
-    EnemySpawn enemySpawn;
+    ZombieSpawner enemySpawn;
     GameObject hedef;
     Animator animator;
     float distanceToStartRun = 30f;
@@ -22,14 +22,14 @@ public class ZombieMovement : MonoBehaviour
     public bool atMelee = false;
     public GameObject vfxHit;
     HealthBar healthBar;
-    
+        
 
     private void Awake()
     {
         healthBar = FindObjectOfType<HealthBar>();
         gameObjects = FindObjectOfType<GameObjects>();
         animator = GetComponent<Animator>();
-        enemySpawn = FindObjectOfType<EnemySpawn>();
+        enemySpawn = FindObjectOfType<ZombieSpawner>();
         agent = GetComponent<NavMeshAgent>();
     }
 
@@ -90,10 +90,7 @@ public class ZombieMovement : MonoBehaviour
             Bullet _bullet = other.gameObject.GetComponent<Bullet>();
             bulletDamage = _bullet.damage;
             health -= bulletDamage;
-
             Destroy(other.gameObject);
-
-            
         }
 
     }
