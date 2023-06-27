@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class TurretSpecs
@@ -7,4 +8,5 @@ public class TurretSpecs
     public int type;
     public int cost;
     public int amount;
+    public Button button;
 }

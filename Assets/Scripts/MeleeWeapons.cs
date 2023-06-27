@@ -11,7 +11,6 @@ public class MeleeWeapons : MonoBehaviour
     List<GameObject> zombies;
     void Start()
     {
-        
         gameObjects = FindObjectOfType<GameObjects>();
     }
 

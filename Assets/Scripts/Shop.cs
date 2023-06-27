@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 public class Shop : MonoBehaviour
 {
@@ -11,40 +12,61 @@ public class Shop : MonoBehaviour
     public TMP_Text text1, text2, text3, text4;
     public TurretSpecs selectedTurret;
     internal int amount = 0;
-    public List<Image> shopButtonIcons;
     public List<Transform> shopBuyTransform;
-
+    internal Animator shopAnimator;
+    internal GameObject shopPanel;
+    CanvasGroup shopCanvasGroup;
+    bool inInventory = false;
+    public GameObject selectIcon;
+    public List<Button> shopButtons;
     
     private void Awake()
     {
         slot = FindObjectOfType<Slot>();
+        shopPanel = transform.GetChild(0).gameObject;
+        shopAnimator = shopPanel.GetComponent<Animator>();
+        shopCanvasGroup = GetComponent<CanvasGroup>();
     }
 
-
+    private void Start()
+    {
+        shopCanvasGroup.alpha = 0f;
+    }
     private void Update()
     {
         UIElements();
     }
 
-   
+    void MoveSelectIconTo(Button button) 
+    {
+        if (!selectIcon.activeInHierarchy) 
+        selectIcon.SetActive(true);
+        
+        selectIcon.transform.position = button.transform.position;
+    }
+
     public void SelectLevel1Turret()
     {
         selectedTurret = slot.lvl1Tur;
+        MoveSelectIconTo(shopButtons[0]);
     }
 
     public void SelectLevel2Turret()
     {
         selectedTurret = slot.lvl2Tur;
+        MoveSelectIconTo(shopButtons[1]);
     }
 
     public void SelectLevel3Turret()
     {
         selectedTurret = slot.lvl3Tur;
+        MoveSelectIconTo(shopButtons[2]);
     }
 
     public void SelectLevel4Turret()
     {
         selectedTurret = slot.lvl4Tur;
+        MoveSelectIconTo(shopButtons[3]);
     }
 
     public void BuyTurret()
@@ -59,28 +81,71 @@ public class Shop : MonoBehaviour
             StashTurret();
         }
         
-        switch (selectedTurret.type)
-        {
-            case 1:
-                Slot.selectedSlot.currentTurret = slot.lvl1Tur;
-                break;
-            case 2:
-                Slot.selectedSlot.currentTurret = slot.lvl2Tur;
-                break;
-            case 3:
-                Slot.selectedSlot.currentTurret = slot.lvl3Tur;
-                break;
-            case 4:
-                Slot.selectedSlot.currentTurret = slot.lvl4Tur;
-                break;
-        }
-        
+        Slot.selectedSlot.currentTurret = slot.turrets[selectedTurret.type-1];
+
         Slot.selectedSlot = null;
         selectedTurret = null;
-        slot.shopPanel.SetActive(false);
+        StartCoroutine("HideShop");
+    }
+    public void OpenShop()
+    {
+        if (inInventory || !shopPanel.activeInHierarchy)
+        {
+            StartCoroutine("HideShop");
+            StartCoroutine("SetShop");
+        }
+    }
+    public void CloseShop() 
+    {
+        StartCoroutine("HideShop");
+        Slot.selectedSlot = null;
+        selectedTurret = null;
+    }
+    public void OpenInventory() 
+    {
+        if (!inInventory)
+        {
+            StartCoroutine("HideShop");
+            StartCoroutine("SetInventory");
+        }
+    }
+    public IEnumerator HideShop() 
+    {
+        shopAnimator.SetTrigger("shopClose");
+        yield return new WaitForSeconds(0.15f);
+        shopPanel.SetActive(false);
+        shopCanvasGroup.alpha = 0f;
+    }
+    IEnumerator SetShop() 
+    {
+        yield return new WaitForSeconds(0.15f);
+        foreach (TurretSpecs turret in slot.turrets)
+        {
+            turret.button.gameObject.SetActive(true);
+        }
+        shopPanel.SetActive(true);
+        inInventory = false;
+        shopCanvasGroup.alpha = 1.0f;
+        selectedTurret = null;
+    }
+    IEnumerator SetInventory() 
+    {
+        yield return new WaitForSeconds(0.15f);
+        foreach (TurretSpecs turret in slot.turrets)
+        {
+            if (turret.amount <= 0) 
+            {
+                turret.button.gameObject.SetActive(false);
+            }
+        }
+
+        shopPanel.SetActive(true);
+        inInventory = true;
+        shopCanvasGroup.alpha = 1.0f;
+        selectedTurret = null;
     }
     
-
+    
     void UIElements()
     {
         text1.text = slot.lvl1Tur.amount.ToString();
@@ -98,49 +163,37 @@ public class Shop : MonoBehaviour
             placeTurret.gameObject.SetActive(false); 
         }
 
-        if (selectedTurret == null)
+        if (selectedTurret == null || inInventory || selectedTurret.turret == null)
         {
             buyButton.gameObject.SetActive(false);
         }
         else
         {
             buyButton.gameObject.SetActive(true);
-            switch (selectedTurret.type) 
-            {
-                case 1:
-                    buyButton.transform.position = shopBuyTransform[0].position; break;
-                case 2:
-                    buyButton.transform.position = shopBuyTransform[1].position; break;
-                case 3:
-                    buyButton.transform.position = shopBuyTransform[2].position; break;
-                case 4:
-                    buyButton.transform.position = shopBuyTransform[3].position; break;
-            }
-            
+            buyButton.transform.position = shopBuyTransform[selectedTurret.type - 1].position;
         }
+        
+        
+        if (selectedTurret != null)
+        {
+            selectIcon.gameObject.SetActive(true);
+        }
+
+        else
+        {
+            selectIcon.gameObject.SetActive(false);
+        }
+        
     }
     void StashTurret()
     {
-        switch (Slot.selectedSlot.currentTurret.type)
+        if (Slot.selectedSlot.currentTurret.type != 0f)
         {
-            case 1:
-                Slot.selectedSlot.lvl1Tur.turret.SetActive(false);
-
-                break;
-            case 2:
-                Slot.selectedSlot.lvl2Tur.turret.SetActive(false);
-
-                break;
-            case 3:
-                Slot.selectedSlot.lvl3Tur.turret.SetActive(false);
-
-                break;
-            case 4:
-                Slot.selectedSlot.lvl4Tur.turret.SetActive(false);
-
-                break;
+            Slot.selectedSlot.turrets[Slot.selectedSlot.currentTurret.type - 1].turret.SetActive(false);
         }
+        
         Slot.selectedSlot.currentTurret.amount++;
         selectedTurret.amount--;
     }
+
 }

@@ -166,13 +166,8 @@ public class Turret : MonoBehaviour
             GameObject _muzzlePrefab = Instantiate(muzzlePrefab, _firepoint.position, _firepoint.rotation);
             Destroy(_muzzlePrefab, 1f);
             
-            
-            
-
             if (bullet != null)
                 bullet.BulletTarget(target);
-            
-           
         }
     }
 

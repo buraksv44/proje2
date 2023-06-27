@@ -1,28 +1,43 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Slot : MonoBehaviour
 {
     Animator slotAnimator;
     public static Slot selectedSlot;
-    public GameObject shopPanel;
+    internal GameObject shopPanel;
     public TurretSpecs lvl1Tur, lvl2Tur, lvl3Tur, lvl4Tur;
     public TurretSpecs currentTurret;
-    
+    public List<TurretSpecs> turrets;
+    Shop shop;
+
+
     private void Awake()
     {
         slotAnimator = GetComponent<Animator>();
         shopPanel = GameObject.FindWithTag("Shop");
+        shop = FindObjectOfType<Shop>();
     }
     private void Start()
     {
         shopPanel.SetActive(false);
+        turrets.Add(lvl1Tur);
+        turrets.Add(lvl2Tur);
+        turrets.Add(lvl3Tur);
+        turrets.Add(lvl4Tur);
     }
     private void OnMouseDown()
     {
         selectedSlot = GetSelectedSlot();
 
-        if(currentTurret.turret==null && shopPanel != null)
-            shopPanel.SetActive(true);
+        if (currentTurret.turret == null && shopPanel != null && !shopPanel.activeInHierarchy)
+        {
+            shop.OpenShop();
+        }
+        else 
+        {
+            
+        }
     }
     private void Update()
     {
@@ -41,20 +56,9 @@ public class Slot : MonoBehaviour
         }
         else
         {
-            switch (currentTurret.type)
+            if (currentTurret.type != 0f) 
             {
-                case 1:
-                    lvl1Tur.turret.SetActive(true);
-                    break;
-                case 2:
-                    lvl2Tur.turret.SetActive(true);
-                    break;
-                case 3:
-                    lvl3Tur.turret.SetActive(true);
-                    break;
-                case 4:
-                    lvl4Tur.turret.SetActive(true);
-                    break;
+                turrets[currentTurret.type - 1].turret.SetActive(true);
             }
         }
     }
