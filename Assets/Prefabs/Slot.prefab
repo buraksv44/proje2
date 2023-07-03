@@ -116,6 +116,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2559994341602710099}
+  - {fileID: 8414642401696814872}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -131,26 +132,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721e4b42276e9024389e92f08cef5150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  noTurret:
+    turret: {fileID: 0}
+    type: 0
+    cost: 0
+    amount: 0
+    shopButton: {fileID: 0}
   lvl1Tur:
     turret: {fileID: 2699179867409370483}
     type: 1
     cost: 0
+    amount: 0
+    shopButton: {fileID: 0}
   lvl2Tur:
     turret: {fileID: 1824741940729848324}
     type: 2
     cost: 0
+    amount: 0
+    shopButton: {fileID: 0}
   lvl3Tur:
     turret: {fileID: 1031893669121181502}
     type: 3
     cost: 0
+    amount: 0
+    shopButton: {fileID: 0}
   lvl4Tur:
     turret: {fileID: 2783750152898568579}
     type: 4
     cost: 0
+    amount: 0
+    shopButton: {fileID: 0}
   currentTurret:
     turret: {fileID: 0}
     type: 3
     cost: 0
+    amount: 0
+    shopButton: {fileID: 0}
+  turrets: []
+  buttonTransform: {fileID: 8414642401696814872}
 --- !u!65 &4930607177765866723
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -183,6 +202,36 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!1 &7341914450168339952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8414642401696814872}
+  m_Layer: 0
+  m_Name: ButtonTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8414642401696814872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7341914450168339952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3439111745415532817}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1031755676062302608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -445,7 +494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1000011222192992, guid: 9b3a643ca887918468955b42c4531666, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4000013081111600, guid: 9b3a643ca887918468955b42c4531666, type: 3}
       propertyPath: m_RootOrder

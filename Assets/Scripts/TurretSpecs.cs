@@ -8,5 +8,5 @@ public class TurretSpecs
     public int type;
     public int cost;
     public int amount;
-    public Button button;
+    public Button shopButton;
 }

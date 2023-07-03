@@ -6,10 +6,11 @@ public class Slot : MonoBehaviour
     Animator slotAnimator;
     public static Slot selectedSlot;
     internal GameObject shopPanel;
-    public TurretSpecs lvl1Tur, lvl2Tur, lvl3Tur, lvl4Tur;
+    public TurretSpecs noTurret,lvl1Tur, lvl2Tur, lvl3Tur, lvl4Tur;
     public TurretSpecs currentTurret;
     public List<TurretSpecs> turrets;
     Shop shop;
+    public Transform buttonTransform;
 
 
     private void Awake()
@@ -30,14 +31,26 @@ public class Slot : MonoBehaviour
     {
         selectedSlot = GetSelectedSlot();
 
-        if (currentTurret.turret == null && shopPanel != null && !shopPanel.activeInHierarchy)
-        {
-            shop.OpenShop();
-        }
-        else 
-        {
+        shop.turretPanel.transform.position = buttonTransform.position;
+        //if (!shopPanel.activeInHierarchy) 
+        //{
+        //    shopPanel.SetActive (true);
             
-        }
+        //}
+
+        //if (currentTurret.turret == null)
+        //{
+        //    if (!shopPanel.activeInHierarchy)
+        //    {
+        //        shop.OpenShop();
+        //    }
+        //}
+        //else 
+        //{
+        //    shop.sellButtonX.SetActive(true);
+        //    shop.sellButton.transform.position = buttonTransform.position;
+
+        //}
     }
     private void Update()
     {
@@ -56,9 +69,17 @@ public class Slot : MonoBehaviour
         }
         else
         {
-            if (currentTurret.type != 0f) 
+            if (currentTurret.type != 0f)
             {
                 turrets[currentTurret.type - 1].turret.SetActive(true);
+            }
+            else
+            {
+                foreach (TurretSpecs turret in turrets) 
+                {
+                    if(turret.turret.activeInHierarchy)
+                    turret.turret.SetActive(false);
+                }
             }
         }
     }
@@ -80,4 +101,5 @@ public class Slot : MonoBehaviour
             slotAnimator.SetBool("isSelected", false);
         }
     }
+    
 }
