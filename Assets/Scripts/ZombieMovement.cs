@@ -54,10 +54,6 @@ public class ZombieMovement : MonoBehaviour
         {
            destination = hedef.transform.position;
         }
-
-
-    
-
     }
 
     void Update()
@@ -76,8 +72,6 @@ public class ZombieMovement : MonoBehaviour
         checkDistance();
         ZombieDeath();
         AddZombieToMelee();
-
-
     }
 
     
@@ -92,12 +86,8 @@ public class ZombieMovement : MonoBehaviour
             health -= bulletDamage;
             Destroy(other.gameObject);
         }
-
     }
-
-
-
-
+    
     void checkDistance()
     {
         distance = Vector3.Distance(transform.position, hedef.transform.position);

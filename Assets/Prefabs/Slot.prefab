@@ -95,6 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3439111745415532817}
   - component: {fileID: 8439721915409033248}
+  - component: {fileID: -7439969285539543243}
   - component: {fileID: 4930607177765866723}
   - component: {fileID: 7652722326137310314}
   m_Layer: 0
@@ -132,6 +133,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 721e4b42276e9024389e92f08cef5150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonTransform: {fileID: 8414642401696814872}
+--- !u!114 &-7439969285539543243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6626133427006786244}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53f9cfd0107921a479542e162592c116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   noTurret:
     turret: {fileID: 0}
     type: 0
@@ -164,12 +178,11 @@ MonoBehaviour:
     shopButton: {fileID: 0}
   currentTurret:
     turret: {fileID: 0}
-    type: 3
+    type: 0
     cost: 0
     amount: 0
     shopButton: {fileID: 0}
   turrets: []
-  buttonTransform: {fileID: 8414642401696814872}
 --- !u!65 &4930607177765866723
 BoxCollider:
   m_ObjectHideFlags: 0

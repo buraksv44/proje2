@@ -17,30 +17,19 @@ public class Turret : MonoBehaviour
     Transform firePoint;
     public GameObject muzzlePrefab;
     public List<Transform> firepoints;
-    
-    
     Quaternion defaultTurretPos;
     Quaternion lookRotation;
     float rotationThreshold = 4f;
-    
     float timeToFire = 0f;
     public float fireRate = 1f;
     public List<Animator> barrelAnimators;
-
-
     int index = 0;
     public bool isGatling;
     
-
-
-
-
     private void Awake()
     {
         gameObjects = FindObjectOfType<GameObjects>();
-        
         GetBarrelAnimations();
-
     }
     void Start()
     {
@@ -100,22 +89,18 @@ public class Turret : MonoBehaviour
         if (closestZombie != null && shortestDistance <= maxRange && shortestDistance >= minRange)
         {
             target = closestZombie.transform;
-            
-           
         }
         else
         {
             target = null;
         }
     }
-
-
+    
     void Update()
     {
         GunRotation();
     }
-
-
+    
     IEnumerator waitForShoot() 
     {
         while(Quaternion.Angle(gun.rotation, lookRotation)> rotationThreshold)
@@ -130,7 +115,6 @@ public class Turret : MonoBehaviour
         Shoot();
     }
     
-    
     void GunRotation()
     {
         if (target == null)
@@ -138,20 +122,17 @@ public class Turret : MonoBehaviour
             gun.rotation = Quaternion.Lerp(gun.rotation, defaultTurretPos, Time.deltaTime * turnSpeed);
             if (isGatling)
                 barrelAnimators[0].SetBool("isFiring", false);
-            
         }
         else
         {
-
             Vector3 direction = target.position+Vector3.up - transform.position;
             lookRotation = Quaternion.LookRotation(direction);
             gun.rotation = Quaternion.Lerp(gun.rotation, lookRotation, Time.deltaTime * turnSpeed);
             
             StartCoroutine(waitForShoot());
         }
-
     }
-
+    
     void Shoot() 
     {
         if (Time.time >= timeToFire)
@@ -159,9 +140,7 @@ public class Turret : MonoBehaviour
             Transform _firepoint = BarrelToFire();
             timeToFire = Time.time + 1 / fireRate;
             GameObject _bullet = Instantiate(bulletPrefab, _firepoint.position, _firepoint.rotation);
-
             
-
             Bullet bullet = _bullet.GetComponent<Bullet>();
             GameObject _muzzlePrefab = Instantiate(muzzlePrefab, _firepoint.position, _firepoint.rotation);
             Destroy(_muzzlePrefab, 1f);
@@ -169,20 +148,6 @@ public class Turret : MonoBehaviour
             if (bullet != null)
                 bullet.BulletTarget(target);
         }
-    }
-
-    private void OnDrawGizmosSelected()
-    {
-        //Gizmos.color = Color.yellow;
-        //Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, maxRange);
-
-
-        //Gizmos.color = Color.red;
-        //Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, minRange);
-
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(gun.position,gun.position+gun.forward*maxRange);
-
     }
     Transform BarrelToFire()
     {
@@ -204,5 +169,18 @@ public class Turret : MonoBehaviour
             }
         }
         return firePoint;
+    }
+    
+    private void OnDrawGizmosSelected()
+    {
+        //Gizmos.color = Color.yellow;
+        //Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, maxRange);
+
+
+        //Gizmos.color = Color.red;
+        //Gizmos.DrawWireSphere(transform.position - Vector3.up * transform.position.y, minRange);
+
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(gun.position,gun.position+gun.forward*maxRange);
     }
 }

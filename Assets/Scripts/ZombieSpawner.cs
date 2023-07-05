@@ -12,7 +12,6 @@ public class ZombieSpawner : MonoBehaviour
     public int spawnAdeti;
     internal GameObject target;
     GameObjects array;
-    internal int trainHealth = 100;
 
 
     private void Awake()
@@ -112,8 +111,6 @@ public class ZombieSpawner : MonoBehaviour
 
         switch (l)
         {
-
-
             case 1:
                 L1.transform.position = new Vector3(Random.Range(L1.transform.position.x, L1.transform.position.x + 2), enemy.transform.position.y, Random.Range(L1.transform.position.z - 3, L1.transform.position.z + 3));
                 left = L1.transform.position;

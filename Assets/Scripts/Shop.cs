@@ -6,30 +6,33 @@ using System.Collections;
 
 public class Shop : MonoBehaviour
 {
-    Slot slot;
-    public Button buyButton;
+    ActivateTurrets activateTurrets;
+    public GameObject buyButton;
     public GameObject sellButton;
     public GameObject removeButton;
     public GameObject openShopButton;
     public GameObject turretPanel;
-    public Button placeTurret;
+    public GameObject selectIcon;
+    public GameObject placeButton;
+    TMP_Text placeButtonText;
     public TMP_Text text1, text2, text3, text4;
     public TurretSpecs selectedTurret;
-    internal int amount = 0;
-    public List<Transform> shopBuyTransform;
     internal Animator shopAnimator;
     internal GameObject shopPanel;
     CanvasGroup shopCanvasGroup;
     bool inInventory = false;
-    public GameObject selectIcon;
     public List<Button> shopButtons;
-    
+    public bool shopOpened = false;
+
+
     private void Awake()
     {
-        slot = FindObjectOfType<Slot>();
+        activateTurrets = FindObjectOfType<ActivateTurrets>();
         shopPanel = transform.GetChild(0).gameObject;
         shopAnimator = shopPanel.GetComponent<Animator>();
         shopCanvasGroup = GetComponent<CanvasGroup>();
+        placeButtonText = placeButton.transform.GetChild(0).GetComponent<TMP_Text>();
+
     }
 
     private void Start()
@@ -41,35 +44,35 @@ public class Shop : MonoBehaviour
         UIElements();
     }
 
-    void MoveSelectIconTo(Button button) 
+    void MoveSelectIconTo(Button button)
     {
-        if (!selectIcon.activeInHierarchy) 
-        selectIcon.SetActive(true);
-        
+        if (!selectIcon.activeInHierarchy)
+            selectIcon.SetActive(true);
+
         selectIcon.transform.position = button.transform.position;
     }
 
     public void SelectLevel1Turret()
     {
-        selectedTurret = slot.lvl1Tur;
+        selectedTurret = activateTurrets.lvl1Tur;
         MoveSelectIconTo(shopButtons[0]);
     }
 
     public void SelectLevel2Turret()
     {
-        selectedTurret = slot.lvl2Tur;
+        selectedTurret = activateTurrets.lvl2Tur;
         MoveSelectIconTo(shopButtons[1]);
     }
 
     public void SelectLevel3Turret()
     {
-        selectedTurret = slot.lvl3Tur;
+        selectedTurret = activateTurrets.lvl3Tur;
         MoveSelectIconTo(shopButtons[2]);
     }
 
     public void SelectLevel4Turret()
     {
-        selectedTurret = slot.lvl4Tur;
+        selectedTurret = activateTurrets.lvl4Tur;
         MoveSelectIconTo(shopButtons[3]);
     }
 
@@ -77,7 +80,25 @@ public class Shop : MonoBehaviour
     {
         selectedTurret.amount++;
     }
-
+    public void SellTurret()
+    {
+        Slot.selectedSlot.currentTurret = Slot.selectedSlot.noTurret;
+        Slot.selectedSlot = null;
+    }
+    public void RemoveTurret()
+    {
+        Slot.selectedSlot.currentTurret.amount++;
+        Slot.selectedSlot.currentTurret = Slot.selectedSlot.noTurret;
+        Slot.selectedSlot = null;
+    }
+    void StashTurret()
+    {
+        if (Slot.selectedSlot.currentTurret.type != 0f)
+        {
+            Slot.selectedSlot.turrets[Slot.selectedSlot.currentTurret.type - 1].turret.SetActive(false);
+            Slot.selectedSlot.currentTurret.amount++;
+        }
+    }
     public void PlaceTurret()
     {
         if (Slot.selectedSlot.currentTurret != null && selectedTurret.amount > 0)
@@ -85,12 +106,8 @@ public class Shop : MonoBehaviour
             StashTurret();
             selectedTurret.amount--;
         }
-        
-        Slot.selectedSlot.currentTurret = slot.turrets[selectedTurret.type-1];
-
+        Slot.selectedSlot.currentTurret = activateTurrets.turrets[selectedTurret.type - 1];
         Slot.selectedSlot = null;
-        selectedTurret = null;
-        StartCoroutine("HideShop");
     }
     public void OpenShop()
     {
@@ -100,13 +117,14 @@ public class Shop : MonoBehaviour
             StartCoroutine("SetShop");
         }
     }
-    public void CloseShop() 
+    public void CloseShop()
     {
         StartCoroutine("HideShop");
         Slot.selectedSlot = null;
         selectedTurret = null;
+        shopOpened = false;
     }
-    public void OpenInventory() 
+    public void OpenInventory()
     {
         if (!inInventory)
         {
@@ -114,17 +132,17 @@ public class Shop : MonoBehaviour
             StartCoroutine("SetInventory");
         }
     }
-    public IEnumerator HideShop() 
+    IEnumerator HideShop()
     {
         shopAnimator.SetTrigger("shopClose");
         yield return new WaitForSeconds(0.15f);
         shopPanel.SetActive(false);
         shopCanvasGroup.alpha = 0f;
     }
-    IEnumerator SetShop() 
+    IEnumerator SetShop()
     {
         yield return new WaitForSeconds(0.15f);
-        foreach (TurretSpecs turret in slot.turrets)
+        foreach (TurretSpecs turret in activateTurrets.turrets)
         {
             turret.shopButton.gameObject.SetActive(true);
         }
@@ -133,52 +151,56 @@ public class Shop : MonoBehaviour
         shopCanvasGroup.alpha = 1.0f;
         selectedTurret = null;
     }
-    IEnumerator SetInventory() 
+    IEnumerator SetInventory()
     {
         yield return new WaitForSeconds(0.15f);
-        foreach (TurretSpecs turret in slot.turrets)
+        foreach (TurretSpecs turret in activateTurrets.turrets)
         {
-            if (turret.amount <= 0) 
+            if (turret.amount <= 0)
             {
                 turret.shopButton.gameObject.SetActive(false);
             }
         }
-
         shopPanel.SetActive(true);
         inInventory = true;
         shopCanvasGroup.alpha = 1.0f;
         selectedTurret = null;
     }
-    
-    
     void UIElements()
     {
-        text1.text = slot.lvl1Tur.amount.ToString();
-        text2.text = slot.lvl2Tur.amount.ToString();
-        text3.text = slot.lvl3Tur.amount.ToString();
-        text4.text = slot.lvl4Tur.amount.ToString();
+        text1.text = activateTurrets.lvl1Tur.amount.ToString();
+        text2.text = activateTurrets.lvl2Tur.amount.ToString();
+        text3.text = activateTurrets.lvl3Tur.amount.ToString();
+        text4.text = activateTurrets.lvl4Tur.amount.ToString();
 
-        if (selectedTurret != null && Slot.selectedSlot != null && selectedTurret.amount > 0)
+        if (selectedTurret != null && Slot.selectedSlot != null && selectedTurret.amount > 0 && selectedTurret.type != Slot.selectedSlot.currentTurret.type)
         {
-            //placeTurret.gameObject.transform.position = Slot.selectedSlot.gameObject.transform.position+new Vector3(-0.5f,1,0);
-            placeTurret.gameObject.SetActive(true);
+            placeButton.gameObject.SetActive(true);
+            if (Slot.selectedSlot.currentTurret.type != 0)
+            {
+                placeButtonText.text = "Replace";
+            }
+            else
+            {
+                placeButtonText.text = "Place";
+            }
         }
-        else 
-        { 
-            placeTurret.gameObject.SetActive(false); 
+        else
+        {
+            placeButton.gameObject.SetActive(false);
         }
 
         if (selectedTurret == null || inInventory || selectedTurret.turret == null)
         {
-            buyButton.gameObject.SetActive(false);
+            buyButton.SetActive(false);
         }
         else
         {
-            buyButton.gameObject.SetActive(true);
-            buyButton.transform.position = shopBuyTransform[selectedTurret.type - 1].position;
+            buyButton.SetActive(true);
+            buyButton.transform.position = shopButtons[selectedTurret.type - 1].transform.position;
         }
-        
-        
+
+
         if (selectedTurret != null && selectedTurret.turret != null)
         {
             selectIcon.gameObject.SetActive(true);
@@ -189,26 +211,22 @@ public class Shop : MonoBehaviour
             selectIcon.gameObject.SetActive(false);
         }
 
-        
-        
-        if (Slot.selectedSlot != null) 
+        if (Slot.selectedSlot != null)
         {
             turretPanel.SetActive(true);
-            
+
             if (Slot.selectedSlot.currentTurret.type == 0)
             {
                 sellButton.SetActive(false);
                 removeButton.SetActive(false);
-
             }
             else
             {
                 sellButton.SetActive(true);
                 removeButton.SetActive(true);
-
             }
         }
-        else 
+        else
         {
             sellButton.SetActive(false);
             removeButton.SetActive(false);
@@ -223,26 +241,5 @@ public class Shop : MonoBehaviour
         {
             openShopButton.SetActive(false);
         }
-
-    }
-    void StashTurret()
-    {
-        if (Slot.selectedSlot.currentTurret.type != 0f)
-        {
-            Slot.selectedSlot.turrets[Slot.selectedSlot.currentTurret.type - 1].turret.SetActive(false);
-            Slot.selectedSlot.currentTurret.amount++;
-        }
-    }
-
-    public void SellTurret() 
-    {
-        Slot.selectedSlot.currentTurret = Slot.selectedSlot.noTurret;
-        Slot.selectedSlot = null;
-    }
-    public void RemoveTurret() 
-    {
-        Slot.selectedSlot.currentTurret.amount++;
-        Slot.selectedSlot.currentTurret = Slot.selectedSlot.noTurret;
-        Slot.selectedSlot = null;
     }
 }

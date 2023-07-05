@@ -13,8 +13,6 @@ public class MeleeWeapons : MonoBehaviour
     {
         gameObjects = FindObjectOfType<GameObjects>();
     }
-
-
     public void RightButton()
     {
         Anim.SetTrigger("RightMelee");
@@ -30,7 +28,6 @@ public class MeleeWeapons : MonoBehaviour
         Anim.SetTrigger("BackMelee");
         MeleeWapon();
     }
-
     public void MeleeWapon()
     {
         if (meleeType == 1)
