@@ -39,7 +39,7 @@ public class Turret : MonoBehaviour
             InvokeRepeating("UpdateTarget", 0f, 0.5f);
         }
     }
-
+    
     void GetBarrelAnimations() 
     {
         for (int i = 0; i < barrelAnimators.Count; i++)
@@ -154,7 +154,7 @@ public class Turret : MonoBehaviour
         if (index + 1 <= firepoints.Count)
         {
             firePoint = firepoints[index];
-
+            
             if (!isGatling)
             {
                 barrelAnimators[index].speed = fireRate;

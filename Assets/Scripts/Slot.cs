@@ -36,7 +36,6 @@ public class Slot : MonoBehaviour
     private void Update()
     {
         HoverAnimation();
-
     }
     public ActivateTurrets GetSelectedSlot()
     {

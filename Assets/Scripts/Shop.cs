@@ -24,6 +24,8 @@ public class Shop : MonoBehaviour
     public List<Button> shopButtons;
     public bool shopOpened = false;
 
+    public int playerGold;
+
 
     private void Awake()
     {
@@ -33,17 +35,30 @@ public class Shop : MonoBehaviour
         shopCanvasGroup = GetComponent<CanvasGroup>();
         placeButtonText = placeButton.transform.GetChild(0).GetComponent<TMP_Text>();
 
-    }
+        if (!PlayerPrefs.HasKey("gold"))
+        {
+            PlayerPrefs.SetInt("gold", 6000);
+        }
+        
+        playerGold = PlayerPrefs.GetInt("gold");
 
+    }
+    
     private void Start()
     {
         shopCanvasGroup.alpha = 0f;
     }
+    
     private void Update()
     {
         UIElements();
-    }
 
+        if (Slot.selectedSlot != null)
+        {
+            Debug.Log(Slot.selectedSlot.currentTurret.type);
+        }
+    }
+    
     void MoveSelectIconTo(Button button)
     {
         if (!selectIcon.activeInHierarchy)
@@ -78,35 +93,57 @@ public class Shop : MonoBehaviour
 
     public void BuyTurret()
     {
-        selectedTurret.amount++;
+        if (playerGold >= selectedTurret.cost)
+        {
+            //selectedTurret.amount++;
+            MainMenu.change_Turret_Amount(selectedTurret.type, +1);
+            playerGold -= selectedTurret.cost;
+            PlayerPrefs.SetInt("gold", playerGold);
+        }
     }
     public void SellTurret()
     {
+        playerGold += Slot.selectedSlot.currentTurret.cost / 2;
         Slot.selectedSlot.currentTurret = Slot.selectedSlot.noTurret;
         Slot.selectedSlot = null;
+        PlayerPrefs.SetInt("gold", playerGold);
     }
     public void RemoveTurret()
     {
-        Slot.selectedSlot.currentTurret.amount++;
+        //Slot.selectedSlot.currentTurret.amount++;
+        MainMenu.change_Turret_Amount(Slot.selectedSlot.currentTurret.type, 1);
         Slot.selectedSlot.currentTurret = Slot.selectedSlot.noTurret;
         Slot.selectedSlot = null;
     }
     void StashTurret()
     {
-        if (Slot.selectedSlot.currentTurret.type != 0f)
+
+        if (Slot.selectedSlot.currentTurret.type != 0)
         {
+            Debug.Log(" selectedTurret.amount BEFORE :" + Slot.selectedSlot.currentTurret.amount);
+            //Slot.selectedSlot.currentTurret.amount++;
+            MainMenu.change_Turret_Amount(Slot.selectedSlot.currentTurret.type, 1);
             Slot.selectedSlot.turrets[Slot.selectedSlot.currentTurret.type - 1].turret.SetActive(false);
-            Slot.selectedSlot.currentTurret.amount++;
         }
     }
     public void PlaceTurret()
     {
-        if (Slot.selectedSlot.currentTurret != null && selectedTurret.amount > 0)
+        Debug.Log("PlaceTurret() " + Slot.selectedSlot.currentTurret.type + " amount --- "+ Slot.selectedSlot.currentTurret.amount);
+        
+        //if (Slot.selectedSlot.currentTurret != null && selectedTurret.amount > 0)
+
+        if (Slot.selectedSlot.currentTurret != null && MainMenu.get_Turret_Amount(selectedTurret.type) > 0)
         {
             StashTurret();
-            selectedTurret.amount--;
+            
+            // selectedTurret.amount--;
+            MainMenu.change_Turret_Amount(selectedTurret.type, -1);
+
+            Slot.selectedSlot.currentTurret = activateTurrets.turrets[selectedTurret.type - 1];
         }
-        Slot.selectedSlot.currentTurret = activateTurrets.turrets[selectedTurret.type - 1];
+        
+        Debug.Log("  Slot.selectedSlot.currentTurret.type :" + Slot.selectedSlot.currentTurret.type);
+        Debug.Log("  Slot.selectedSlot.currentTurret.turret.name :" + Slot.selectedSlot.currentTurret.turret.name);
         Slot.selectedSlot = null;
     }
     public void OpenShop()
@@ -156,7 +193,8 @@ public class Shop : MonoBehaviour
         yield return new WaitForSeconds(0.15f);
         foreach (TurretSpecs turret in activateTurrets.turrets)
         {
-            if (turret.amount <= 0)
+            //turret.amount
+            if ( MainMenu.get_Turret_Amount(turret.type) <= 0)
             {
                 turret.shopButton.gameObject.SetActive(false);
             }
@@ -168,12 +206,15 @@ public class Shop : MonoBehaviour
     }
     void UIElements()
     {
-        text1.text = activateTurrets.lvl1Tur.amount.ToString();
-        text2.text = activateTurrets.lvl2Tur.amount.ToString();
-        text3.text = activateTurrets.lvl3Tur.amount.ToString();
-        text4.text = activateTurrets.lvl4Tur.amount.ToString();
+        //activateTurrets.lvl2Tur.amount.ToString(); hepsine uygula
+        text1.text = MainMenu.get_Turret_Amount(1).ToString();
+        text2.text = MainMenu.get_Turret_Amount(2).ToString();
+        text3.text = MainMenu.get_Turret_Amount(3).ToString();
+        text4.text = MainMenu.get_Turret_Amount(4).ToString();
 
-        if (selectedTurret != null && Slot.selectedSlot != null && selectedTurret.amount > 0 && selectedTurret.type != Slot.selectedSlot.currentTurret.type)
+        //selectedTurret.amount
+
+        if (selectedTurret != null && Slot.selectedSlot != null && MainMenu.get_Turret_Amount(selectedTurret.type) > 0 && selectedTurret.type != Slot.selectedSlot.currentTurret.type)
         {
             placeButton.gameObject.SetActive(true);
             if (Slot.selectedSlot.currentTurret.type != 0)

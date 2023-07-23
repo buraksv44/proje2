@@ -155,25 +155,25 @@ MonoBehaviour:
   lvl1Tur:
     turret: {fileID: 2699179867409370483}
     type: 1
-    cost: 0
+    cost: 100
     amount: 0
     shopButton: {fileID: 0}
   lvl2Tur:
     turret: {fileID: 1824741940729848324}
     type: 2
-    cost: 0
+    cost: 200
     amount: 0
     shopButton: {fileID: 0}
   lvl3Tur:
     turret: {fileID: 1031893669121181502}
     type: 3
-    cost: 0
+    cost: 300
     amount: 0
     shopButton: {fileID: 0}
   lvl4Tur:
     turret: {fileID: 2783750152898568579}
     type: 4
-    cost: 0
+    cost: 400
     amount: 0
     shopButton: {fileID: 0}
   currentTurret:

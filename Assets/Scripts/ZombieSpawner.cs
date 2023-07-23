@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,22 +10,32 @@ public class ZombieSpawner : MonoBehaviour
     internal Vector3 left, right, back;
     public GameObject enemy;
     public int spawnZamani;
-    public int spawnAdeti;
+    public int spawnCount;
     internal GameObject target;
     GameObjects array;
+
+    
+    int spawnOlan = 0;
+    public List<GameObject> enemies;
+    int l1enemy, l2enemy, l3enemy;
+    int sonuc1, sonuc2, kalan1, kalan2;
 
 
     private void Awake()
     {
         array = FindObjectOfType<GameObjects>();
+        ZombieCount();
         Spawner();
 
     }
 
 
+
+
     void Spawner() //belirli zaman araliginda obje spawn etme
     {
 
+        
         StartCoroutine(kk›stifa());
 
     }
@@ -56,8 +67,9 @@ public class ZombieSpawner : MonoBehaviour
 
     IEnumerator kk›stifa()
     {
-        while (sayac < spawnAdeti)
+        while (sayac < spawnCount)
         {
+            Zombie();
             EnemyInstant();
 
             yield return new WaitForSeconds(spawnZamani);
@@ -163,5 +175,38 @@ public class ZombieSpawner : MonoBehaviour
         }
 
     }
+    
+    void ZombieCount()
+    {
+        l1enemy = (spawnCount * 70) / 100;
+        l2enemy = (spawnCount * 20) / 100;
+        l3enemy = (spawnCount * 10) / 100;
 
+        kalan1 = l1enemy % l2enemy;
+        kalan2 = l1enemy % l3enemy;
+        sonuc1 = (l1enemy - kalan1) / l2enemy;
+        sonuc2 = (l1enemy - kalan2) / l3enemy;
+    }
+
+
+    void Zombie()
+    {
+        spawnOlan++;
+
+        if (spawnOlan % sonuc2 == 0 && l3enemy > 0)
+        {
+            enemy = enemies[2];
+            l3enemy--;
+        }
+        else if (spawnOlan % sonuc1 == 0 && l2enemy > 0)
+        {
+            enemy = enemies[1];
+            l2enemy--;
+        }
+        else
+        {
+            enemy = enemies[0];
+            l1enemy--;
+        }
+    }
 }

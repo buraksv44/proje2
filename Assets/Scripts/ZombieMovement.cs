@@ -69,7 +69,7 @@ public class ZombieMovement : MonoBehaviour
             agent.SetDestination(destination);
         }
 
-        checkDistance();
+        CheckDistance();
         ZombieDeath();
         AddZombieToMelee();
     }
@@ -88,7 +88,7 @@ public class ZombieMovement : MonoBehaviour
         }
     }
     
-    void checkDistance()
+    void CheckDistance()
     {
         distance = Vector3.Distance(transform.position, hedef.transform.position);
         if (distance <= distanceToStartRun && distance > distanceToHit)

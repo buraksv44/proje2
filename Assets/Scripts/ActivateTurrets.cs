@@ -20,7 +20,7 @@ public class ActivateTurrets : MonoBehaviour
         ActivateTurret();
     }
 
-    void ActivateTurret()
+    public void ActivateTurret()
     {
         if (currentTurret == null)
         {
@@ -31,6 +31,7 @@ public class ActivateTurrets : MonoBehaviour
             if (currentTurret.type != 0f)
             {
                 turrets[currentTurret.type - 1].turret.SetActive(true);
+                //currentTurret = turrets[currentTurret.type - 1];
             }
             else
             {
